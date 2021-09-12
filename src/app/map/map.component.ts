@@ -22,7 +22,8 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
-    const carsLayer = this.markerService.makeVehicleMarkers();
+    const availableCarsLayer = this.markerService.makeVehicleMarkers()[0];
+    const carsLayer = this.markerService.makeVehicleMarkers()[1];
     const parkingLayer = this.markerService.makeParkingMarkers();
     const trainLayer = this.markerService.makePoiMarkers()[0];
     const poiLayer = this.markerService.makePoiMarkers()[1];
@@ -30,20 +31,21 @@ export class MapComponent implements AfterViewInit {
     this.map = L.map('map', {
       center: this.mapCenter,
       zoom: 12,
-      layers: [tile, carsLayer, parkingLayer, trainLayer, poiLayer]
+      layers: [tile, availableCarsLayer, carsLayer, parkingLayer, trainLayer, poiLayer]
     });
 
     const baseMap = {
     }
 
     const overlayMap = {
-      "<img style='height: 15px; width: 20px' src='assets/map-markers/car-available-solid.png'>": carsLayer,
-      "<img style='height: 20px; width: 20px' src='assets/map-markers/parking-solid.png'>": parkingLayer,
-      "<img style='height: 20px; width: 20px' src='assets/map-markers/train-solid.png'>": trainLayer,
-      "<img style='height: 20px; width: 20px' src='assets/map-markers/poi-solid.png'>": poiLayer,
+      "<img style='height: 15px; width: 20px; margin:5px' src='assets/map-markers/car-available-solid.png'>": availableCarsLayer,
+      "<img style='height: 15px; width: 20px; margin:5px' src='assets/map-markers/car-solid.png'>": carsLayer,
+      "<img style='height: 15px; width: 15px; margin:5px' src='assets/map-markers/parking-solid.png'>": parkingLayer,
+      "<img style='height: 15px; width: 15px; margin:5px' src='assets/map-markers/train-solid.png'>": trainLayer,
+      "<img style='height: 15px; width: 15px; margin:5px' src='assets/map-markers/poi-solid.png'>": poiLayer,
     }
 
-    L.control.layers(baseMap, overlayMap).addTo(this.map);
+    L.control.layers(baseMap, overlayMap, { collapsed: false }).addTo(this.map);
 
   }
 

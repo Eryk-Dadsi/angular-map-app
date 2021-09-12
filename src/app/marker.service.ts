@@ -30,6 +30,7 @@ export class MarkerService {
   makeVehicleMarkers(): any {
 
     const carMarkersGroup = L.markerClusterGroup(this.markerClusterGroupOptions);
+    const availableCarMarkersGroup = L.markerClusterGroup(this.markerClusterGroupOptions);
 
     this.http.get(this.mapDataUrl, { headers: this.headers, params: this.vehicleParam }).subscribe((res: any) => {
       for (const c of res.objects) {
@@ -43,11 +44,19 @@ export class MarkerService {
           tooltipAnchor: [16, -28]
         });
         const marker = L.marker([lat, lon], { icon: carMarkers });
-        carMarkersGroup.addLayer(marker);
         marker.bindPopup(this.popupService.makeVehiclePopup(c));
+
+        if (c.status == 'AVAILABLE') {
+          availableCarMarkersGroup.addLayer(marker);
+        } else {
+          carMarkersGroup.addLayer(marker);
+        }
+
       }
     });
-    return carMarkersGroup;
+    const carsGroup = [availableCarMarkersGroup, carMarkersGroup];
+
+    return carsGroup;
   };
 
   makePoiMarkers(): any {
