@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-leaflet-example": {
+    "angular-map-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:class": {
@@ -38,16 +38,23 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-leaflet-example",
+            "outputPath": "dist/angular-map-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images/",
+                "output": "./assets"
+              }
             ],
             "styles": [
+              "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -89,10 +96,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-leaflet-example:build:production"
+              "browserTarget": "angular-map-app:build:production"
             },
             "development": {
-              "browserTarget": "angular-leaflet-example:build:development"
+              "browserTarget": "angular-map-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,7 +107,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-leaflet-example:build"
+            "browserTarget": "angular-map-app:build"
           }
         },
         "test": {
@@ -123,5 +130,5 @@
       }
     }
   },
-  "defaultProject": "angular-leaflet-example"
+  "defaultProject": "angular-map-app"
 }

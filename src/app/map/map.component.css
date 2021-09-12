@@ -1,0 +1,22 @@
+.map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: #039c4b;
+}
+
+.logo {
+  height: 10vh;
+  background-color: inherit;
+}
+.map-frame {
+  border: 1px solid black;
+  height: 85vh;
+}
+
+#map {
+  height: 100%;
+}
